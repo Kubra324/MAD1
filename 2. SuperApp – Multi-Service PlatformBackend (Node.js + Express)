@@ -1,0 +1,15 @@
+// backend/server.js
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+// Sample API: Get services
+app.get('/api/services', (req, res) => {
+    res.json([
+        { id: 1, name: "Cleaning" },
+        { id: 2, name: "Delivery" },
+        { id: 3, name: "Plumbing" }
+    ]);
+});
+
+app.listen(5000, () => console.log("Server running on port 5000"));
