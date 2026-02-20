@@ -1,0 +1,13 @@
+// backend/server.js
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+// Sample API for recitation feedback
+app.post('/api/recite', (req, res) => {
+    const { text } = req.body;
+    // Placeholder: process recitation
+    res.json({ message: "Recitation received", text });
+});
+
+app.listen(5000, () => console.log("Server running on port 5000"));
