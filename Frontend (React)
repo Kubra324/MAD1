@@ -1,0 +1,28 @@
+// frontend/src/App.js
+import React, { useState } from "react";
+
+function App() {
+  const [text, setText] = useState("");
+  const [response, setResponse] = useState("");
+
+  const handleSubmit = async () => {
+    const res = await fetch("http://localhost:5000/api/recite", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+    const data = await res.json();
+    setResponse(data.message);
+  };
+
+  return (
+    <div>
+      <h1>Qitab-e-Noor</h1>
+      <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Recite here" />
+      <button onClick={handleSubmit}>Submit</button>
+      <p>{response}</p>
+    </div>
+  );
+}
+
+export default App;
