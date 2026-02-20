@@ -1,0 +1,33 @@
+TravelMate – Travel Booking Appconst express = require('express');
+const app = express();
+app.use(express.json());
+
+let bookings = [];
+
+app.post('/api/bookings', (req, res) => {
+  const { user, type, destination, date } = req.body;
+  const newBooking = { id: bookings.length + 1, user, type, destination, date };
+  bookings.push(newBooking);
+  res.json(newBooking);
+});
+
+app.get('/api/bookings', (req, res) => res.json(bookings));
+
+app.listen(5000, () => console.log("TravelMate backend running on port 5000"));
+
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+let bookings = [];
+
+app.post('/api/bookings', (req, res) => {
+  const { user, type, destination, date } = req.body;
+  const newBooking = { id: bookings.length + 1, user, type, destination, date };
+  bookings.push(newBooking);
+  res.json(newBooking);
+});
+
+app.get('/api/bookings', (req, res) => res.json(bookings));
+
+app.listen(5000, () => console.log("TravelMate backend running on port 5000"));
