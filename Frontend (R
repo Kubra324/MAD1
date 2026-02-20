@@ -1,0 +1,24 @@
+import React, { useEffect, useState } from "react";
+
+function App() {
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/services")
+      .then(res => res.json())
+      .then(data => setServices(data));
+  }, []);
+
+  return (
+    <div>
+      <h1>SuperApp Services</h1>
+      <ul>
+        {services.map(service => (
+          <li key={service.id}>{service.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
