@@ -1,0 +1,22 @@
+const router = require("express").Router();
+const db = require("../config/db");
+
+router.post("/add", (req, res) => {
+  const { room_no, capacity } = req.body;
+
+  db.query(
+    "INSERT INTO rooms (room_no, capacity) VALUES (?, ?)",
+    [room_no, capacity],
+    err => {
+      res.json({ message: "Room Added" });
+    }
+  );
+});
+
+router.get("/all", (req, res) => {
+  db.query("SELECT * FROM rooms", (err, result) => {
+    res.json(result);
+  });
+});
+
+module.exports = router;

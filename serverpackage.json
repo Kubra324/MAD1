@@ -1,0 +1,16 @@
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/students", require("./routes/students"));
+app.use("/api/rooms", require("./routes/rooms"));
+app.use("/api/fees", require("./routes/fees"));
+app.use("/api/attendance", require("./routes/attendance"));
+app.use("/api/complaints", require("./routes/complaints"));
+
+app.listen(5000, () => console.log("Server running on port 5000"));

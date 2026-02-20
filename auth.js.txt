@@ -1,0 +1,43 @@
+const router = require("express").Router();
+const db = require("../config/db");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+router.post("/register", async (req, res) => {
+  const { username, password } = req.body;
+  const hash = await bcrypt.hash(password, 10);
+
+  db.query(
+    "INSERT INTO admins (username, password) VALUES (?, ?)",
+    [username, hash],
+    (err) => {
+      if (err) return res.status(500).json(err);
+      res.json({ message: "Admin Registered" });
+    }
+  );
+});
+
+router.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  db.query(
+    "SELECT * FROM admins WHERE username=?",
+    [username],
+    async (err, result) => {
+      if (result.length === 0)
+        return res.status(400).json({ message: "User not found" });
+
+      const valid = await bcrypt.compare(password, result[0].password);
+      if (!valid)
+        return res.status(400).json({ message: "Invalid Password" });
+
+      const token = jwt.sign({ id: result[0].id }, "secret", {
+        expiresIn: "1d"
+      });
+
+      res.json({ token });
+    }
+  );
+});
+
+module.exports = router;
