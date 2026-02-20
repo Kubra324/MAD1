@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Order Management</h1>
+
+<div class="container">
+
+    <!-- STOCK IN SECTION -->
+    <div class="card">
+        <h2>Stock In</h2>
+        <input type="text" id="biltiIn" placeholder="Bilti Number">
+        <input type="text" id="stationName" placeholder="Station Name">
+        <input type="text" id="bulkNumber" placeholder="Bulk Number">
+        <input type="text" id="receivePerson" placeholder="Receive Person">
+        <input type="text" id="challanNumber" placeholder="Challan Number">
+        <input type="text" id="transportCompany" placeholder="Transport Company">
+        <button onclick="addStockIn()">Add Stock In</button>
+    </div>
+
+    <!-- STOCK OUT SECTION -->
+    <div class="card">
+        <h2>Stock Out</h2>
+        <input type="text" id="biltiOut" placeholder="Bilti Number">
+        <select id="deliveryType">
+            <option value="By Hand">By Hand</option>
+            <option value="Pick Up">Pick Up</option>
+        </select>
+        <button onclick="addStockOut()">Add Stock Out</button>
+    </div>
+
+</div>
+
+<h2>Records</h2>
+<table id="recordsTable">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Bilti</th>
+            <th>Station</th>
+            <th>Bulk</th>
+            <th>Person</th>
+            <th>Challan</th>
+            <th>Transport</th>
+            <th>Delivery</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script src="script.js"></script>
+</body>
+</html>
