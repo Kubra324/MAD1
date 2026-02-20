@@ -1,0 +1,11 @@
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+// Sample API: Book appointment
+app.post('/api/appointment', (req, res) => {
+    const { patient, doctor, date } = req.body;
+    res.json({ message: `Appointment booked for ${patient} with Dr.${doctor} on ${date}` });
+});
+
+app.listen(5000, () => console.log("Server running on port 5000"));
