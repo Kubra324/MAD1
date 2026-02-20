@@ -1,0 +1,45 @@
+const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server, { cors: { origin: "*" } });
+
+io.on('connection', socket => {
+  console.log('User connected');
+  socket.on('message', msg => io.emit('message', msg));
+  socket.on('disconnect', () => console.log('User disconnected'));
+});
+
+server.listen(5000, () => console.log('ChatSphere server running on port 5000'));
+
+import React, { useState, useEffect } from "react";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:5000");
+
+function App() {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+
+  useEffect(() => {
+    socket.on("message", msg => setMessages(prev => [...prev, msg]));
+  }, []);
+
+  const sendMessage = () => {
+    socket.emit("message", input);
+    setInput("");
+  };
+
+  return (
+    <div>
+      <h1>ChatSphere</h1>
+      <input value={input} onChange={e => setInput(e.target.value)} />
+      <button onClick={sendMessage}>Send</button>
+      <ul>{messages.map((m, i) => <li key={i}>{m}</li>)}</ul>
+    </div>
+  );
+}
+
+export default App;
