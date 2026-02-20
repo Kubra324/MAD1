@@ -1,0 +1,19 @@
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+let products = [
+  { id: 1, name: "Laptop", price: 1000 },
+  { id: 2, name: "Phone", price: 500 }
+];
+
+app.get('/api/products', (req, res) => res.json(products));
+
+app.post('/api/products', (req, res) => {
+  const { name, price } = req.body;
+  const newProduct = { id: products.length + 1, name, price };
+  products.push(newProduct);
+  res.json(newProduct);
+});
+
+app.listen(5000, () => console.log("ShopEase backend running on port 5000"));
