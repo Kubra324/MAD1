@@ -1,0 +1,32 @@
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+let jobs = [];
+
+app.get('/api/jobs', (req, res) => res.json(jobs));
+
+app.post('/api/jobs', (req, res) => {
+  const { title, company, location } = req.body;
+  const job = { id: jobs.length + 1, title, company, location };
+  jobs.push(job);
+  res.json(job);
+});
+
+app.listen(5000, () => console.log('JobLink backend running on port 5000'));
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+let jobs = [];
+
+app.get('/api/jobs', (req, res) => res.json(jobs));
+
+app.post('/api/jobs', (req, res) => {
+  const { title, company, location } = req.body;
+  const job = { id: jobs.length + 1, title, company, location };
+  jobs.push(job);
+  res.json(job);
+});
+
+app.listen(5000, () => console.log('JobLink backend running on port 5000'));
