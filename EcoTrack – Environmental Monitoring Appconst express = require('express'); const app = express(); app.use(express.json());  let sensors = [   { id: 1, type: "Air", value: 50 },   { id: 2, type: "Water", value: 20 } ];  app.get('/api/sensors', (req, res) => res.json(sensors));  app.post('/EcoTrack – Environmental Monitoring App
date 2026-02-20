@@ -1,0 +1,56 @@
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+let sensors = [
+  { id: 1, type: "Air", value: 50 },
+  { id: 2, type: "Water", value: 20 }
+];
+
+app.get('/api/sensors', (req, res) => res.json(sensors));
+
+app.post('/api/sensors', (req, res) => {
+  const { type, value } = req.body;
+  const newSensor = { id: sensors.length + 1, type, value };
+  sensors.push(newSensor);
+  res.json(newSensor);
+});
+
+app.listen(5000, () => console.log('EcoTrack backend running on port 5000'));
+import React, { useState, useEffect } from "react";
+
+function App() {
+  const [jobs, setJobs] = useState([]);
+  const [title, setTitle] = useState("");
+  const [company, setCompany] = useState("");
+  const [location, setLocation] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/jobs")
+      .then(res => res.json())
+      .then(setJobs);
+  }, []);
+
+  const addJob = () => {
+    fetch("http://localhost:5000/api/jobs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, company, location })
+    }).then(() => fetch("http://localhost:5000/api/jobs")
+      .then(res => res.json())
+      .then(setJobs));
+  };
+
+  return (
+    <div>
+      <h1>JobLink</h1>
+      <input placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} />
+      <input placeholder="Company" value={company} onChange={e => setCompany(e.target.value)} />
+      <input placeholder="Location" value={location} onChange={e => setLocation(e.target.value)} />
+      <button onClick={addJob}>Add Job</button>
+      <ul>{jobs.map(j => <li key={j.id}>{j.title} at {j.company}, {j.location}</li>)}</ul>
+    </div>
+  );
+}
+
+export default App;
